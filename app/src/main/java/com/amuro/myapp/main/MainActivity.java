@@ -1,22 +1,22 @@
 package com.amuro.myapp.main;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import com.amuro.lib.activity.BaseActivity;
+import com.amuro.lib.utils.ToastUtils;
+import com.amuro.myapp.MyAppBaseActivity;
 import com.amuro.myapp.R;
-import com.amuro.myapp.login.LoginActivity;
-import com.amuro.myapp.register.RegisterActivity;
-import com.amuro.myapp.test.TestActivity;
+import com.amuro.myapp.login.ILoginView;
+import com.amuro.myapp.login.presenter.LoginPresenter;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends MyAppBaseActivity implements ILoginView
 {
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void initData()
     {
-
+        loginPresenter = LoginPresenter.getInstance();
+        loginPresenter.setView(this);
     }
 
     @Override
@@ -24,36 +24,46 @@ public class MainActivity extends BaseActivity
     {
         setContentView(R.layout.activity_main_layout);
 
-        findViewById(R.id.bt_to_login).setOnClickListener(new View.OnClickListener()
+        if(LoginPresenter.getLoginState() == LoginPresenter.LOGIN_STATE_LOGIN)
         {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(context, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+            doWhenLogin();
+        }
+    }
 
-        findViewById(R.id.bt_to_register).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(context, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        findViewById(R.id.bt_to_test).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(context, TestActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void doWhenLogin()
+    {
+        ToastUtils.show(this, "Login succeed");
     }
 
 
+    @Override
+    public void onLoginSucceed()
+    {
+        doWhenLogin();
+    }
+
+    @Override
+    public void onLoginFailed()
+    {
+
+    }
+
+    @Override
+    public void onLoadingStarted()
+    {
+
+    }
+
+    @Override
+    public void onLoadingCompleted()
+    {
+
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        loginPresenter.removeView();
+        super.onDestroy();
+    }
 }

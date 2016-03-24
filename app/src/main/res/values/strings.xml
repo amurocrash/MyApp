@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MyApp</string>
+    <string name="welcome">Welcome to myapp...</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="main_title">MyApp</string>
+    <string name="login">Sign in</string>
+    <string name="register">Register</string>
 </resources>

@@ -2,7 +2,8 @@ package com.amuro.lib;
 
 import android.content.Context;
 
-import com.amuro.lib.http.urlParser.URLDataInitiator;
+import com.amuro.lib.infrustructure.http.urlParser.URLDataInitiator;
+import com.amuro.lib.mvp.model.ModelManager;
 
 /**
  * Created by Amuro on 2016/3/8.
