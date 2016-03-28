@@ -1,9 +1,8 @@
-package com.amuro.myapp;
+package com.amuro.myapp.funcs;
 
 import android.app.Application;
 
 import com.amuro.lib.LibCore;
-import com.amuro.myapp.login.presenter.LoginPresenter;
 
 /**
  * Created by Amuro on 2016/3/8.

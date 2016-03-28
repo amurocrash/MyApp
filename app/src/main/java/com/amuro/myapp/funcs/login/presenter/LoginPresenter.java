@@ -1,11 +1,10 @@
-package com.amuro.myapp.login.presenter;
+package com.amuro.myapp.funcs.login.presenter;
 
 import android.os.Handler;
 
-import com.amuro.lib.infrustructure.http.DefaultThreadPool;
 import com.amuro.lib.mvp.presenter.AbsPresenter;
-import com.amuro.myapp.login.ILoginView;
-import com.amuro.myapp.login.model.User;
+import com.amuro.myapp.funcs.login.ILoginView;
+import com.amuro.myapp.funcs.login.model.User;
 
 /**
  * Created by Amuro on 2016/3/24.
@@ -41,7 +40,7 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
     {
         notifyLoginStart();
 
-        DefaultThreadPool.getInstance().execute(new Runnable()
+        runInBackground(new Runnable()
         {
             @Override
             public void run()
@@ -50,6 +49,7 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
                 notifyLoginResult();
             }
         });
+
     }
 
     private void notifyLoginStart()

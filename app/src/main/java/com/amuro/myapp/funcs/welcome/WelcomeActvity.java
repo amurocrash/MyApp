@@ -1,16 +1,14 @@
-package com.amuro.myapp.welcome;
+package com.amuro.myapp.funcs.welcome;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.amuro.lib.mvp.view.BaseActivity;
-import com.amuro.myapp.MyAppBaseActivity;
+import com.amuro.myapp.funcs.MyAppBaseActivity;
 import com.amuro.myapp.R;
-import com.amuro.myapp.login.ILoginView;
-import com.amuro.myapp.login.presenter.LoginPresenter;
-import com.amuro.myapp.main.MainActivity;
+import com.amuro.myapp.funcs.login.ILoginView;
+import com.amuro.myapp.funcs.login.presenter.LoginPresenter;
+import com.amuro.myapp.funcs.main.MainActivity;
 
 /**
  * Created by Amuro on 2016/3/24.

@@ -1,6 +1,5 @@
-package com.amuro.myapp.login.model;
+package com.amuro.myapp.funcs.login.model;
 
-import com.amuro.lib.infrustructure.http.DefaultThreadPool;
 import com.amuro.lib.mvp.model.AbsModel;
 
 /**
@@ -93,5 +92,10 @@ public class User extends AbsModel
         {
             e.printStackTrace();
         }
+    }
+
+    public void register()
+    {
+
     }
 }

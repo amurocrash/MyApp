@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/welcome"
         android:textStyle="normal"
-        android:textSize="@dimen/title_level_1"
+        android:textSize="@dimen/text_size_level_1"
         />
 
         <ProgressBar

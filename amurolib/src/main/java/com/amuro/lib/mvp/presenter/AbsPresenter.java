@@ -1,5 +1,6 @@
 package com.amuro.lib.mvp.presenter;
 
+import com.amuro.lib.infrustructure.http.DefaultThreadPool;
 import com.amuro.lib.mvp.view.IMvpView;
 
 /**
@@ -29,4 +30,8 @@ public abstract class AbsPresenter<V extends IMvpView>
         view = null;
     }
 
+    protected void runInBackground(Runnable r)
+    {
+        DefaultThreadPool.getInstance().execute(r);
+    }
 }

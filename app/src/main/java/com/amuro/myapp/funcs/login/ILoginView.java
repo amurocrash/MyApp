@@ -1,4 +1,4 @@
-package com.amuro.myapp.login;
+package com.amuro.myapp.funcs.login;
 
 import com.amuro.lib.mvp.view.IMvpView;
 
