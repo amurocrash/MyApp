@@ -30,6 +30,11 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity android:name=".funcs.login.LoginActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
 
         <activity
             android:name=".funcs.register.RegisterActivity"

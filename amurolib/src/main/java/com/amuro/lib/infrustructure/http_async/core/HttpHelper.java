@@ -1,15 +1,15 @@
-package com.amuro.lib.infrustructure.http.core;
+package com.amuro.lib.infrustructure.http_async.core;
 
 import android.os.Handler;
 
-import com.amuro.lib.infrustructure.http.DefaultThreadPool;
-import com.amuro.lib.infrustructure.http.constants.HttpConstants;
-import com.amuro.lib.infrustructure.http.mock.IMockManager;
-import com.amuro.lib.infrustructure.http.response_parser.BaseEntity;
-import com.amuro.lib.infrustructure.http.response_parser.IResponseParser;
-import com.amuro.lib.infrustructure.http.response_parser.JsonParser;
-import com.amuro.lib.infrustructure.http.urlParser.URLData;
-import com.amuro.lib.infrustructure.http.urlParser.URLDataInitiator;
+import com.amuro.lib.infrustructure.http_async.DefaultThreadPool;
+import com.amuro.lib.infrustructure.http_async.constants.HttpConstants;
+import com.amuro.lib.infrustructure.http_async.mock.IMockManager;
+import com.amuro.lib.infrustructure.http_async.response_parser.BaseEntity;
+import com.amuro.lib.infrustructure.http_async.response_parser.IResponseParser;
+import com.amuro.lib.infrustructure.http_async.response_parser.JsonParser;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLDataInitiator;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

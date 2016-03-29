@@ -1,8 +1,8 @@
-package com.amuro.lib.infrustructure.http.core;
+package com.amuro.lib.infrustructure.http_async.core;
 
 import android.text.TextUtils;
 
-import com.amuro.lib.infrustructure.http.urlParser.URLData;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
 import com.amuro.lib.utils.LogUtils;
 
 import java.util.Map;

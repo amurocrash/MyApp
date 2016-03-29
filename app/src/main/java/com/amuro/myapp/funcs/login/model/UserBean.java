@@ -1,29 +1,24 @@
 package com.amuro.myapp.funcs.login.model;
 
-import com.amuro.lib.mvp.model.AbsModel;
+import com.amuro.lib.mvp.model.AbsBean;
 
 /**
- * Created by Amuro on 2016/3/24.
+ * Created by user on 2016/3/29.
  */
-public class User extends AbsModel
+public class UserBean extends AbsBean
 {
-    public static User getInstance()
-    {
-        return getInstance(User.class);
-    }
-
     private String username;
     private String nickname;
     private String sex;
     private String age;
     private String signature;
 
-    public User()
+    public UserBean()
     {
 
     }
 
-    public User(String username, String nickname, String sex, String age, String signature)
+    public UserBean(String username, String nickname, String sex, String age, String signature)
     {
         this.username = username;
         this.nickname = nickname;
@@ -80,22 +75,5 @@ public class User extends AbsModel
     public void setSignature(String signature)
     {
         this.signature = signature;
-    }
-
-    public void login(String username, String password)
-    {
-        try
-        {
-            Thread.sleep(3000);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void register()
-    {
-
     }
 }

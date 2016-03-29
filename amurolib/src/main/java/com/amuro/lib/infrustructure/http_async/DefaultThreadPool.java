@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http;
+package com.amuro.lib.infrustructure.http_async;
 
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ArrayBlockingQueue;

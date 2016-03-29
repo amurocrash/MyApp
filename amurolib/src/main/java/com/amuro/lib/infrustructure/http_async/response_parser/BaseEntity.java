@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http.response_parser;
+package com.amuro.lib.infrustructure.http_async.response_parser;
 
 import java.io.Serializable;
 
@@ -16,6 +16,14 @@ public class BaseEntity implements Serializable
 
 	public BaseEntity()
 	{
+	}
+
+	public BaseEntity(boolean isSuccess, int errorCode, String errorMessage, String result)
+	{
+		this.isSuccess = isSuccess;
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
+		this.result = result;
 	}
 
 	public boolean isSuccess()

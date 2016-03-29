@@ -34,6 +34,16 @@ public class MyselfFragment extends BaseFragment implements ILoginView
         {
             ToastUtils.show(getActivity(), "login succeed");
         }
+        else
+        {
+            ToastUtils.show(getActivity(), "login failed");
+        }
+
+    }
+
+    @Override
+    public void onLoginStarted()
+    {
 
     }
 
@@ -49,15 +59,5 @@ public class MyselfFragment extends BaseFragment implements ILoginView
 
     }
 
-    @Override
-    public void onLoadingStarted()
-    {
 
-    }
-
-    @Override
-    public void onLoadingCompleted()
-    {
-
-    }
 }

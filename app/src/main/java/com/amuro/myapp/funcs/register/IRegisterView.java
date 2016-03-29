@@ -7,6 +7,7 @@ import com.amuro.lib.mvp.view.IMvpView;
  */
 public interface IRegisterView extends IMvpView
 {
+    void onRegisterStarted();
     void onRegisterSucceed();
     void onRegisterFailed();
 }

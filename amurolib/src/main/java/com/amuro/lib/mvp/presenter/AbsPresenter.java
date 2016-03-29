@@ -1,6 +1,6 @@
 package com.amuro.lib.mvp.presenter;
 
-import com.amuro.lib.infrustructure.http.DefaultThreadPool;
+import com.amuro.lib.infrustructure.http_async.DefaultThreadPool;
 import com.amuro.lib.mvp.view.IMvpView;
 
 /**

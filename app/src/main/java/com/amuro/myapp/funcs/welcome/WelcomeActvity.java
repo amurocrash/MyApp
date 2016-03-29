@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.amuro.myapp.funcs.MyAppBaseActivity;
 import com.amuro.myapp.R;
 import com.amuro.myapp.funcs.login.ILoginView;
+import com.amuro.myapp.funcs.login.LoginActivity;
 import com.amuro.myapp.funcs.login.presenter.LoginPresenter;
 import com.amuro.myapp.funcs.main.MainActivity;
 
@@ -28,7 +29,7 @@ public class WelcomeActvity extends MyAppBaseActivity implements ILoginView
     {
         setContentView(R.layout.activity_init_layout);
 
-        loginPresenter.login("1", "1");
+        loginPresenter.login();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable()
@@ -36,17 +37,33 @@ public class WelcomeActvity extends MyAppBaseActivity implements ILoginView
             @Override
             public void run()
             {
-                toMainActivity();
+                jumpTo();
             }
         }, 2000);
 
     }
 
-    private void toMainActivity()
+    private void jumpTo()
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent;
+
+        if(LoginPresenter.getLoginState() == LoginPresenter.LOGIN_NEVER)
+        {
+            intent = new Intent(this, LoginActivity.class);
+        }
+        else
+        {
+            intent = new Intent(this, MainActivity.class);
+        }
+
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onLoginStarted()
+    {
+
     }
 
     @Override
@@ -61,15 +78,4 @@ public class WelcomeActvity extends MyAppBaseActivity implements ILoginView
 
     }
 
-    @Override
-    public void onLoadingStarted()
-    {
-
-    }
-
-    @Override
-    public void onLoadingCompleted()
-    {
-
-    }
 }

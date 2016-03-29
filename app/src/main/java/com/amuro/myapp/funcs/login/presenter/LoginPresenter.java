@@ -1,31 +1,35 @@
 package com.amuro.myapp.funcs.login.presenter;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.amuro.lib.mvp.presenter.AbsPresenter;
+import com.amuro.lib.utils.LogUtils;
+import com.amuro.lib.utils.SharedPreferManager;
 import com.amuro.myapp.funcs.login.ILoginView;
-import com.amuro.myapp.funcs.login.model.User;
+import com.amuro.myapp.funcs.login.model.UserModel;
 
 /**
  * Created by Amuro on 2016/3/24.
  */
 public class LoginPresenter extends AbsPresenter<ILoginView>
 {
+    public static final int LOGIN_NEVER = -2;
+    public static final int LOGIN_STATE_LOGOUT = -1;
+    public static final int LOGIN_STATE_LOGIN = 0;
+    public static final int LOGIN_STATE_LOGINING = 1;
+
     public static LoginPresenter getInstance()
     {
         return getInstance(LoginPresenter.class);
     }
 
-    private User user;
+    private UserModel userModel;
 
     public LoginPresenter()
     {
-        user = User.getInstance();
+        userModel = UserModel.getInstance();
     }
-
-    public static final int LOGIN_STATE_LOGOUT = -1;
-    public static final int LOGIN_STATE_LOGIN = 0;
-    public static final int LOGIN_STATE_LOGINING = 1;
 
     private static int loginState = LOGIN_STATE_LOGOUT;
 
@@ -36,6 +40,22 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
 
     private Handler handler = new Handler();
 
+    public void login()
+    {
+        String username = SharedPreferManager.getInstance().getSpValue("username");
+        String password = SharedPreferManager.getInstance().getSpValue("password");
+
+        LogUtils.e("auto login: " + username + ", " + password);
+
+        if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password))
+        {
+            loginState = LOGIN_NEVER;
+            return;
+        }
+
+        login(username, password);
+    }
+
     public void login(final String username, final String password)
     {
         notifyLoginStart();
@@ -45,8 +65,14 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
             @Override
             public void run()
             {
-                user.login(username, password);
-                notifyLoginResult();
+                if(userModel.login(username, password))
+                {
+                    notifyLoginSucceed();
+                }
+                else
+                {
+                    notifyLoginFailed();
+                }
             }
         });
 
@@ -57,11 +83,11 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
         loginState = LOGIN_STATE_LOGINING;
         if(view != null)
         {
-            view.onLoadingStarted();
+            view.onLoginStarted();
         }
     }
 
-    private void notifyLoginResult()
+    private void notifyLoginSucceed()
     {
         loginState = LOGIN_STATE_LOGIN;
         if(view != null)
@@ -71,8 +97,23 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
                 @Override
                 public void run()
                 {
-                    view.onLoadingCompleted();
                     view.onLoginSucceed();
+                }
+            });
+        }
+    }
+
+    private void notifyLoginFailed()
+    {
+        loginState = LOGIN_STATE_LOGOUT;
+        if(view != null)
+        {
+            handler.post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    view.onLoginFailed();
                 }
             });
         }

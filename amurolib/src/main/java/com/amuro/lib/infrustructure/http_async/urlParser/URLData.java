@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http.urlParser;
+package com.amuro.lib.infrustructure.http_async.urlParser;
 
 public class URLData
 {

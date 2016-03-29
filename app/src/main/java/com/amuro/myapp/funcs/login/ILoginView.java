@@ -7,6 +7,7 @@ import com.amuro.lib.mvp.view.IMvpView;
  */
 public interface ILoginView extends IMvpView
 {
+    void onLoginStarted();
     void onLoginSucceed();
     void onLoginFailed();
 }

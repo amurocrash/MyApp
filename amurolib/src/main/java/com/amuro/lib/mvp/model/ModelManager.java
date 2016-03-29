@@ -1,5 +1,7 @@
 package com.amuro.lib.mvp.model;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,17 +19,15 @@ public class ModelManager
         {
             try
             {
-                model = clazz.newInstance();
+                Constructor cs = clazz.getDeclaredConstructor(new Class[]{});
+                cs.setAccessible(true);
+                model = (AbsModel) cs.newInstance(new Object[]{});
+                modelMap.put(clazz, model);
             }
-            catch (InstantiationException e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
-            catch (IllegalAccessException e)
-            {
-                e.printStackTrace();
-            }
-            modelMap.put(clazz, model);
         }
 
         return (M)model;

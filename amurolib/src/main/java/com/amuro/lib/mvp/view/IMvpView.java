@@ -5,6 +5,4 @@ package com.amuro.lib.mvp.view;
  */
 public interface IMvpView
 {
-    void onLoadingStarted();
-    void onLoadingCompleted();
 }

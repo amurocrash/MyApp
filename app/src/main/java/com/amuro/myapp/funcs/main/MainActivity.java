@@ -15,6 +15,7 @@ import com.amuro.myapp.utils.custom_view.CustomViewPager;
 public class MainActivity extends MyAppBaseActivity
 {
     private CustomViewPager viewPager;
+    private MainPagerAdapter adapter;
     private BottomBar bottomBar;
 
     @Override
@@ -31,7 +32,8 @@ public class MainActivity extends MyAppBaseActivity
         bottomBar = (BottomBar)findViewById(R.id.bb);
 
         viewPager.setPagingEnabled(false);
-        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
+        adapter = new MainPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
         bottomBar.setOnBottomBarClickListener(new BottomBar.OnBottomBarClickListener()
         {
             @Override
@@ -40,7 +42,10 @@ public class MainActivity extends MyAppBaseActivity
                 viewPager.setCurrentItem(position);
             }
         });
+        bottomBar.setTexts(bottomTitles);
     }
+
+    final String[] bottomTitles = new String[]{"chat", "friend", "show", "myself"};
 
     public class MainPagerAdapter extends FragmentStatePagerAdapter
     {
@@ -69,23 +74,13 @@ public class MainActivity extends MyAppBaseActivity
         @Override
         public CharSequence getPageTitle(int position)
         {
-            switch (position)
-            {
-                case 0:
-                    return "chat";
-                case 1:
-                    return "friend";
-                case 2:
-                    return "show";
-                default:
-                    return "myself";
-            }
+            return bottomTitles[position];
         }
 
         @Override
         public int getCount()
         {
-            return 4;
+            return bottomTitles.length;
         }
     }
 

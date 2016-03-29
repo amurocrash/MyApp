@@ -1,14 +1,12 @@
-package com.amuro.lib.infrustructure.http.core;
+package com.amuro.lib.infrustructure.http;
 
-
-import android.os.Handler;
 import android.text.TextUtils;
 
-import com.amuro.lib.infrustructure.http.constants.HttpConstants;
-import com.amuro.lib.infrustructure.http.response_parser.BaseEntity;
-import com.amuro.lib.infrustructure.http.response_parser.IResponseParser;
-import com.amuro.lib.infrustructure.http.response_parser.ResponseParserFactory;
-import com.amuro.lib.infrustructure.http.urlParser.URLData;
+import com.amuro.lib.infrustructure.http_async.constants.HttpConstants;
+import com.amuro.lib.infrustructure.http_async.response_parser.BaseEntity;
+import com.amuro.lib.infrustructure.http_async.response_parser.IResponseParser;
+import com.amuro.lib.infrustructure.http_async.response_parser.ResponseParserFactory;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
 import com.amuro.lib.utils.LogUtils;
 
 import java.io.BufferedReader;
@@ -19,86 +17,42 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * Created by Amuro on 2016/3/8.
+ * Created by user on 2016/3/29.
  */
-public abstract class HttpRequest implements Runnable
+public abstract class HttpRequest
 {
-    public interface OnHttpResponseListener
-    {
-        public void onSucceed(BaseEntity baseEntity);
-        public void onFailed(HttpError error);
-    }
-
-    private OnHttpResponseListener httpListener;
-
-    private void notifySucceed(final BaseEntity baseEntity)
-    {
-        if(httpListener != null)
-        {
-            handler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    httpListener.onSucceed(baseEntity);
-                }
-            });
-        }
-    }
-
-    private void notifyFailed(final HttpError error)
-    {
-        if(httpListener != null)
-        {
-            handler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    httpListener.onFailed(error);
-                }
-            });
-        }
-    }
-
     protected HttpURLConnection conn;
-    protected Handler handler;
     protected URLData urlData;
     protected Map<String, String> paramMap;
 
     public HttpRequest(URLData urlData)
     {
-        this(urlData, null, null);
+        this(urlData, null);
     }
 
-    public HttpRequest(URLData urlData, Map<String, String> paramMap, OnHttpResponseListener httpListener)
+    public HttpRequest(URLData urlData, Map<String, String> paramMap)
     {
         this.urlData = urlData;
         this.paramMap = paramMap;
-        this.httpListener = httpListener;
-
-        this.handler = new Handler();
     }
 
     protected abstract String getMethod();
     protected abstract String getUrl();
     protected abstract void sendData() throws Exception;
 
-    @Override
-    public void run()
+    public BaseEntity launch()
     {
         try
         {
             initConn();
             sendData();
-            disposeResponse();
+            return disposeResponse();
         }
         catch (Exception e)
         {
-            notifyFailed(
-                    new HttpError(HttpConstants.ERROR_CODE_LOCAL,
-                            "local error: " + e.getClass() + " --- " + e.getMessage())
-            );
+            BaseEntity be =
+                    new BaseEntity(false, HttpConstants.ERROR_CODE_LOCAL, e.getMessage(), "");
+            return be;
         }
         finally
         {
@@ -140,7 +94,7 @@ public abstract class HttpRequest implements Runnable
         return sb.toString();
     }
 
-    protected void disposeResponse() throws Exception
+    protected BaseEntity disposeResponse() throws Exception
     {
         int responseCode = conn.getResponseCode();
         if (responseCode == 200)
@@ -159,18 +113,17 @@ public abstract class HttpRequest implements Runnable
             LogUtils.e("response: " + sb.toString());
             in.close();
 
-            parseResponse(sb.toString());
+            return parseResponse(sb.toString());
 
         }
         else
         {
-            notifyFailed(
-                    new HttpError(responseCode, "Server error")
-            );
+            BaseEntity be = new BaseEntity(false, responseCode, "", "");
+            return be;
         }
     }
 
-    protected void parseResponse(String response) throws Exception
+    protected BaseEntity parseResponse(String response) throws Exception
     {
         IResponseParser<BaseEntity> parser =
                 ResponseParserFactory.getResponseParser(urlData.getResponseType());
@@ -178,12 +131,12 @@ public abstract class HttpRequest implements Runnable
 
         if(baseEntity != null)
         {
-            notifySucceed(baseEntity);
+            BaseEntity be = new BaseEntity(false, HttpConstants.ERROR_CODE_LOCAL, "", "");
+            return be;
         }
         else
         {
-            notifyFailed(new HttpError(
-                    HttpConstants.ERROR_CODE_LOCAL, "unable to parse response"));
+            return baseEntity;
         }
     }
 

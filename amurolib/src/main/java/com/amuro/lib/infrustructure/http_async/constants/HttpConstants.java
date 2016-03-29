@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http.constants;
+package com.amuro.lib.infrustructure.http_async.constants;
 
 /**
  * Created by Amuro on 2016/3/8.

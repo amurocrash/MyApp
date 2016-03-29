@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http.core;
+package com.amuro.lib.infrustructure.http_async.core;
 
 /**
  * Created by Amuro on 2016/3/8.

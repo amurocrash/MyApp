@@ -1,6 +1,6 @@
-package com.amuro.lib.infrustructure.http.response_parser;
+package com.amuro.lib.infrustructure.http_async.response_parser;
 
-import com.amuro.lib.infrustructure.http.urlParser.URLData;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
 
 public class ResponseParserFactory<T>
 {

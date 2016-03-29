@@ -22,6 +22,13 @@ public class RegisterActivity extends MyAppBaseActivity implements IRegisterView
         setContentView(R.layout.activity_register_layout);
     }
 
+
+    @Override
+    public void onRegisterStarted()
+    {
+
+    }
+
     @Override
     public void onRegisterSucceed()
     {
@@ -30,18 +37,6 @@ public class RegisterActivity extends MyAppBaseActivity implements IRegisterView
 
     @Override
     public void onRegisterFailed()
-    {
-
-    }
-
-    @Override
-    public void onLoadingStarted()
-    {
-
-    }
-
-    @Override
-    public void onLoadingCompleted()
     {
 
     }

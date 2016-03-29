@@ -1,4 +1,4 @@
-package com.amuro.lib.infrustructure.http.urlParser;
+package com.amuro.lib.infrustructure.http_async.urlParser;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package com.amuro.lib;
 
 import android.content.Context;
 
-import com.amuro.lib.infrustructure.http.urlParser.URLDataInitiator;
-import com.amuro.lib.mvp.model.ModelManager;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLDataInitiator;
+import com.amuro.lib.utils.SharedPreferManager;
 
 /**
  * Created by Amuro on 2016/3/8.
@@ -25,5 +25,6 @@ public class LibCore
     public void init(Context context)
     {
         URLDataInitiator.init(context);
+        SharedPreferManager.getInstance().init(context);
     }
 }

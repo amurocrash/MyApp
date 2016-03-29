@@ -1,7 +1,7 @@
 package com.amuro.myapp.funcs.register.presenter;
 
 import com.amuro.lib.mvp.presenter.AbsPresenter;
-import com.amuro.myapp.funcs.login.model.User;
+import com.amuro.myapp.funcs.login.model.UserModel;
 import com.amuro.myapp.funcs.register.IRegisterView;
 
 /**
@@ -14,11 +14,11 @@ public class RegisterPresenter extends AbsPresenter<IRegisterView>
         return getInstance(RegisterPresenter.class);
     }
 
-    private User user;
+    private UserModel userModel;
 
     public RegisterPresenter()
     {
-        user = User.getInstance();
+        userModel = UserModel.getInstance();
     }
 
     public void register()
@@ -28,7 +28,7 @@ public class RegisterPresenter extends AbsPresenter<IRegisterView>
            @Override
            public void run()
            {
-               user.register();
+               userModel.register();
            }
        });
 

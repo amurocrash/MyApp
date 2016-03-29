@@ -92,6 +92,14 @@ public class BottomBar extends LinearLayout
         };
     }
 
+    public void setTexts(String[] titles)
+    {
+        textView0.setText(titles[0]);
+        textView1.setText(titles[1]);
+        textView2.setText(titles[2]);
+        textView3.setText(titles[3]);
+    }
+
 }
 
 

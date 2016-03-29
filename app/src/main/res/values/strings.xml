@@ -4,5 +4,8 @@
 
     <string name="main_title">MyApp</string>
     <string name="login">Sign in</string>
-    <string name="register">Register</string>
+    <string name="register">register</string>
+    <string name="register_hyperlink"><u>register</u></string>
+    <string name="forget_password">forget password</string>
+    <string name="forget_password_hyperlink"><u>forget password</u></string>
 </resources>

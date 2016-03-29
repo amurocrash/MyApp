@@ -1,6 +1,6 @@
-package com.amuro.lib.infrustructure.http.core;
+package com.amuro.lib.infrustructure.http;
 
-import com.amuro.lib.infrustructure.http.urlParser.URLData;
+import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
 
 import java.util.Map;
 
@@ -10,17 +10,17 @@ import java.util.Map;
 public class HttpRequestFactory
 {
     public static HttpRequest getRequest(
-            URLData urlData, Map<String, String> paramMap, HttpRequest.OnHttpResponseListener httpListener)
+            URLData urlData, Map<String, String> paramMap)
     {
         int method = urlData.getMethod();
 
         if(method == URLData.GET)
         {
-            return new HttpRequestGet(urlData, paramMap, httpListener);
+            return new HttpRequestGet(urlData, paramMap);
         }
         else if(method == URLData.POST)
         {
-            return new HttpRequestPost(urlData, paramMap, httpListener);
+            return new HttpRequestPost(urlData, paramMap);
         }
         else
         {
