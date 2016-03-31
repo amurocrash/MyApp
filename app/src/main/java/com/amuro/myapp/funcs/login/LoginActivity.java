@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amuro.lib.infrustructure.http_async.core.HttpError;
 import com.amuro.lib.utils.DialogUtils;
 import com.amuro.lib.utils.ToastUtils;
 import com.amuro.myapp.R;
 import com.amuro.myapp.funcs.MyAppBaseActivity;
+import com.amuro.myapp.funcs.login.model.UserBean;
 import com.amuro.myapp.funcs.login.presenter.LoginPresenter;
 import com.amuro.myapp.funcs.main.MainActivity;
 import com.amuro.myapp.funcs.register.RegisterActivity;
@@ -109,7 +111,7 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
     }
 
     @Override
-    public void onLoginSucceed()
+    public void onLoginSucceed(UserBean userBean)
     {
         progressDialog.dismiss();
         ToastUtils.show(this, "sign in success");
@@ -118,10 +120,10 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
     }
 
     @Override
-    public void onLoginFailed()
+    public void onLoginFailed(HttpError error)
     {
         progressDialog.dismiss();
-        ToastUtils.show(this, "sign in failed");
+        ToastUtils.show(this, "sign in failed: " + error);
     }
 
     @Override

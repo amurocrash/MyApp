@@ -2,6 +2,8 @@ package com.amuro.myapp.funcs.login.model;
 
 import com.amuro.lib.mvp.model.AbsBean;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 2016/3/29.
  */
@@ -75,5 +77,17 @@ public class UserBean extends AbsBean
     public void setSignature(String signature)
     {
         this.signature = signature;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "UserBean{" +
+                "username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", signature='" + signature + '\'' +
+                '}';
     }
 }

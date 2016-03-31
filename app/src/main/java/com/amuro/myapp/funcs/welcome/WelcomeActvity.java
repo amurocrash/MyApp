@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.amuro.lib.infrustructure.http_async.core.HttpError;
 import com.amuro.myapp.funcs.MyAppBaseActivity;
 import com.amuro.myapp.R;
 import com.amuro.myapp.funcs.login.ILoginView;
 import com.amuro.myapp.funcs.login.LoginActivity;
+import com.amuro.myapp.funcs.login.model.UserBean;
 import com.amuro.myapp.funcs.login.presenter.LoginPresenter;
 import com.amuro.myapp.funcs.main.MainActivity;
 
@@ -67,13 +69,13 @@ public class WelcomeActvity extends MyAppBaseActivity implements ILoginView
     }
 
     @Override
-    public void onLoginSucceed()
+    public void onLoginSucceed(UserBean userBean)
     {
 
     }
 
     @Override
-    public void onLoginFailed()
+    public void onLoginFailed(HttpError error)
     {
 
     }

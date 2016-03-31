@@ -3,10 +3,13 @@ package com.amuro.myapp.funcs.login.presenter;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.amuro.lib.infrustructure.http_async.core.HttpError;
+import com.amuro.lib.mvp.model.Event;
 import com.amuro.lib.mvp.presenter.AbsPresenter;
 import com.amuro.lib.utils.LogUtils;
 import com.amuro.lib.utils.SharedPreferManager;
 import com.amuro.myapp.funcs.login.ILoginView;
+import com.amuro.myapp.funcs.login.model.UserBean;
 import com.amuro.myapp.funcs.login.model.UserModel;
 
 /**
@@ -24,11 +27,12 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
         return getInstance(LoginPresenter.class);
     }
 
-    private UserModel userModel;
+    private UserModel  userModel;
 
     public LoginPresenter()
     {
         userModel = UserModel.getInstance();
+        userModel.registerEventSubscriber(this);
     }
 
     private static int loginState = LOGIN_STATE_LOGOUT;
@@ -39,11 +43,13 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
     }
 
     private Handler handler = new Handler();
+    private String username;
+    private String password;
 
     public void login()
     {
-        String username = SharedPreferManager.getInstance().getSpValue("username");
-        String password = SharedPreferManager.getInstance().getSpValue("password");
+        username = SharedPreferManager.getInstance().getSpValue("username");
+        password = SharedPreferManager.getInstance().getSpValue("password");
 
         LogUtils.e("auto login: " + username + ", " + password);
 
@@ -58,24 +64,10 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
 
     public void login(final String username, final String password)
     {
+        this.username = username;
+        this.password = password;
         notifyLoginStart();
-
-        runInBackground(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if(userModel.login(username, password))
-                {
-                    notifyLoginSucceed();
-                }
-                else
-                {
-                    notifyLoginFailed();
-                }
-            }
-        });
-
+        userModel.login(username, password);
     }
 
     private void notifyLoginStart()
@@ -87,35 +79,31 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
         }
     }
 
-    private void notifyLoginSucceed()
+    @Event(Event.EventType.LOGIN_SUCCEED)
+    private void notifyLoginSucceed(UserBean bean)
     {
+        SharedPreferManager.getInstance().saveToSP("username", username);
+        SharedPreferManager.getInstance().saveToSP("password", password);
+
         loginState = LOGIN_STATE_LOGIN;
         if(view != null)
         {
-            handler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    view.onLoginSucceed();
-                }
-            });
+            view.onLoginSucceed(bean);
         }
     }
 
-    private void notifyLoginFailed()
+    @Event(Event.EventType.LOGIN_FAILED)
+    private void notifyLoginFailed(HttpError error)
     {
         loginState = LOGIN_STATE_LOGOUT;
         if(view != null)
         {
-            handler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    view.onLoginFailed();
-                }
-            });
+            view.onLoginFailed(error);
         }
+    }
+
+    public UserBean getUserBean()
+    {
+        return userModel.getUserBean();
     }
 }

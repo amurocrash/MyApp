@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSON;
 public class JsonParser<T> implements IResponseParser<T>
 {
 	@Override
-	public T parseResponse(String response)
+	public T parseResponse(String response, Class<T> clazz)
 	{
-		return (T)JSON.parseObject(response);
+		return JSON.parseObject(response, clazz);
 	}
 
 }

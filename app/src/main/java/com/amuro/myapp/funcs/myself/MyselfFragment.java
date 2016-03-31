@@ -1,10 +1,14 @@
 package com.amuro.myapp.funcs.myself;
 
+import android.widget.TextView;
+
+import com.amuro.lib.infrustructure.http_async.core.HttpError;
 import com.amuro.lib.mvp.view.BaseFragment;
 import com.amuro.lib.utils.LogUtils;
 import com.amuro.lib.utils.ToastUtils;
 import com.amuro.myapp.R;
 import com.amuro.myapp.funcs.login.ILoginView;
+import com.amuro.myapp.funcs.login.model.UserBean;
 import com.amuro.myapp.funcs.login.presenter.LoginPresenter;
 
 /**
@@ -27,18 +31,27 @@ public class MyselfFragment extends BaseFragment implements ILoginView
         loginPresenter.setView(this);
     }
 
+    private TextView textView;
+
     @Override
     protected void initView()
     {
+        textView = (TextView)findViewById(R.id.tv);
+
         if(LoginPresenter.getLoginState() == LoginPresenter.LOGIN_STATE_LOGIN)
         {
-            ToastUtils.show(getActivity(), "login succeed");
+            disposeLogin(loginPresenter.getUserBean());
         }
         else
         {
             ToastUtils.show(getActivity(), "login failed");
         }
 
+    }
+
+    private void disposeLogin(UserBean userBean)
+    {
+        textView.setText(userBean.toString());
     }
 
     @Override
@@ -48,13 +61,13 @@ public class MyselfFragment extends BaseFragment implements ILoginView
     }
 
     @Override
-    public void onLoginSucceed()
+    public void onLoginSucceed(UserBean userBean)
     {
-        ToastUtils.show(getActivity(), "login succeed");
+        disposeLogin(userBean);
     }
 
     @Override
-    public void onLoginFailed()
+    public void onLoginFailed(HttpError error)
     {
 
     }
