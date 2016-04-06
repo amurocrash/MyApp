@@ -80,4 +80,9 @@ public class WelcomeActvity extends MyAppBaseActivity implements ILoginView
 
     }
 
+    @Override
+    public void onLogout()
+    {
+
+    }
 }

@@ -5,7 +5,6 @@ import com.amuro.lib.infrustructure.http_async.core.HttpHelper;
 import com.amuro.lib.mvp.model.AbsModel;
 import com.amuro.lib.mvp.model.Event;
 import com.amuro.lib.utils.LogUtils;
-import com.amuro.lib.utils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,23 +20,19 @@ public class UserModel extends AbsModel
     }
 
     private UserBean userBean;
-    private HttpHelper<UserBean> httpHelper;
+    private HttpHelper<UserBean> httpHelperLogin;
+    private HttpHelper httpHelperRegister;
 
     private UserModel()
     {
         userBean = new UserBean();
-        httpHelper = new HttpHelper();
+        httpHelperLogin = new HttpHelper();
+        httpHelperRegister = new HttpHelper();
     }
 
     public UserBean getUserBean()
     {
         return userBean;
-    }
-
-    public interface LoginListener
-    {
-        void onSucceed();
-        void onFailed();
     }
 
     public void login(String username, String password)
@@ -46,7 +41,7 @@ public class UserModel extends AbsModel
         paramMap.put("username", username);
         paramMap.put("password", password);
 
-        httpHelper.invoke("login", paramMap, new HttpHelper.OnResponseListener<UserBean>()
+        httpHelperLogin.invoke("login", paramMap, new HttpHelper.OnResponseListener<UserBean>()
         {
 
             @Override
@@ -66,8 +61,62 @@ public class UserModel extends AbsModel
         });
     }
 
-    public void register()
+    public void register(
+            String username, String password, String nickname, String sex,
+            String age, String signature, String checkCode)
     {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("username", username);
+        paramMap.put("password", password);
+        paramMap.put("nickname", nickname);
+        paramMap.put("sex", sex);
+        paramMap.put("age", age);
+        paramMap.put("signature", signature);
+        paramMap.put("checkCode", checkCode);
 
+        httpHelperRegister.invoke("register", paramMap, new HttpHelper.OnResponseListener()
+        {
+            @Override
+            public void onSuccess(Object o)
+            {
+                notifyEvent(Event.EventType.REGISTER_SUCCESS);
+            }
+
+            @Override
+            public void onFailed(HttpError error)
+            {
+                notifyEvent(Event.EventType.REGISTER_FAILED, error);
+            }
+        });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

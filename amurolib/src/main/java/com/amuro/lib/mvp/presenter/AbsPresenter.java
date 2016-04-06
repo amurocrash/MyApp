@@ -3,6 +3,9 @@ package com.amuro.lib.mvp.presenter;
 import com.amuro.lib.infrustructure.http_async.DefaultThreadPool;
 import com.amuro.lib.mvp.view.IMvpView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Amuro on 2016/3/24.
  */
@@ -13,21 +16,21 @@ public abstract class AbsPresenter<V extends IMvpView>
         return PresenterManager.getPresenter(clazz);
     }
 
-    protected V view;
-
-    public void setView(V view)
+    protected AbsPresenter()
     {
-        this.view = view;
+        viewList = new ArrayList<>();
     }
 
-    public V getView()
+    protected List<V> viewList;
+
+    public void addView(V view)
     {
-        return view;
+        viewList.add(view);
     }
 
-    public void removeView()
+    public void removeView(V view)
     {
-        view = null;
+        viewList.remove(view);
     }
 
     protected void runInBackground(Runnable r)

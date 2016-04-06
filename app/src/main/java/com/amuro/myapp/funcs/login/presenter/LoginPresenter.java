@@ -1,6 +1,5 @@
 package com.amuro.myapp.funcs.login.presenter;
 
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.amuro.lib.infrustructure.http_async.core.HttpError;
@@ -29,8 +28,9 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
 
     private UserModel  userModel;
 
-    public LoginPresenter()
+    protected LoginPresenter()
     {
+        super();
         userModel = UserModel.getInstance();
         userModel.registerEventSubscriber(this);
     }
@@ -42,7 +42,6 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
         return loginState;
     }
 
-    private Handler handler = new Handler();
     private String username;
     private String password;
 
@@ -73,9 +72,13 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
     private void notifyLoginStart()
     {
         loginState = LOGIN_STATE_LOGINING;
-        if(view != null)
+
+        for(ILoginView view : viewList)
         {
-            view.onLoginStarted();
+            if (view != null)
+            {
+                view.onLoginStarted();
+            }
         }
     }
 
@@ -86,9 +89,12 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
         SharedPreferManager.getInstance().saveToSP("password", password);
 
         loginState = LOGIN_STATE_LOGIN;
-        if(view != null)
+        for(ILoginView view : viewList)
         {
-            view.onLoginSucceed(bean);
+            if (view != null)
+            {
+                view.onLoginSucceed(bean);
+            }
         }
     }
 
@@ -96,14 +102,33 @@ public class LoginPresenter extends AbsPresenter<ILoginView>
     private void notifyLoginFailed(HttpError error)
     {
         loginState = LOGIN_STATE_LOGOUT;
-        if(view != null)
+        for(ILoginView view : viewList)
         {
-            view.onLoginFailed(error);
+            if (view != null)
+            {
+                view.onLoginFailed(error);
+            }
         }
     }
 
     public UserBean getUserBean()
     {
         return userModel.getUserBean();
+    }
+
+    public void logout()
+    {
+        loginState = LOGIN_STATE_LOGOUT;
+
+        SharedPreferManager.getInstance().removeSpValue("username");
+        SharedPreferManager.getInstance().removeSpValue("password");
+
+        for(ILoginView view : viewList)
+        {
+            if (view != null)
+            {
+                view.onLogout();
+            }
+        }
     }
 }

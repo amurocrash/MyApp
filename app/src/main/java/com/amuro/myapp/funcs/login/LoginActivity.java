@@ -31,7 +31,7 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
     protected void initData()
     {
         loginPresenter = LoginPresenter.getInstance();
-        loginPresenter.setView(this);
+        loginPresenter.addView(this);
     }
 
     private AutoCompleteTextView acTextViewUsername;
@@ -39,8 +39,6 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
     private Button buttonLogin;
     private TextView textViewForgetPassword;
     private TextView textViewRegister;
-
-    private ProgressDialog progressDialog;
 
     @Override
     protected void initView(Bundle savedInstanceState)
@@ -52,8 +50,6 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
         buttonLogin = (Button)findViewById(R.id.bt_login);
         textViewForgetPassword = (TextView)findViewById(R.id.tv_forget_password);
         textViewRegister = (TextView)findViewById(R.id.tv_register);
-
-        progressDialog = DialogUtils.getProgressDialog(this);
 
         buttonLogin.setOnClickListener(new View.OnClickListener()
         {
@@ -107,29 +103,36 @@ public class LoginActivity extends MyAppBaseActivity implements ILoginView
     @Override
     public void onLoginStarted()
     {
-        progressDialog.show();
+        getProgressDialog().show();
     }
 
     @Override
     public void onLoginSucceed(UserBean userBean)
     {
-        progressDialog.dismiss();
+        getProgressDialog().dismiss();
         ToastUtils.show(this, "sign in success");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void onLoginFailed(HttpError error)
     {
-        progressDialog.dismiss();
+        getProgressDialog().dismiss();
         ToastUtils.show(this, "sign in failed: " + error);
+    }
+
+    @Override
+    public void onLogout()
+    {
+
     }
 
     @Override
     protected void onDestroy()
     {
-        loginPresenter.removeView();
+        loginPresenter.removeView(this);
         super.onDestroy();
     }
 }

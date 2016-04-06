@@ -12,4 +12,5 @@ public interface ILoginView extends IMvpView
     void onLoginStarted();
     void onLoginSucceed(UserBean userBean);
     void onLoginFailed(HttpError error);
+    void onLogout();
 }

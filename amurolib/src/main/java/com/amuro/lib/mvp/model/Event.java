@@ -12,7 +12,9 @@ public @interface Event
 	public enum EventType
 	{
 		LOGIN_SUCCEED,
-		LOGIN_FAILED;
+		LOGIN_FAILED,
+		REGISTER_SUCCESS,
+		REGISTER_FAILED;
 	}
 	
 	EventType value();
