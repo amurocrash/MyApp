@@ -40,12 +40,12 @@ public abstract class BaseFragment extends Fragment
             }
         }
 
-        initView();
+        initView(savedInstanceState);
         
         return rootView;
     }
 
-    protected abstract void initView();
+    protected abstract void initView(Bundle savedInstanceState);
 
     protected View findViewById(int id)
     {

@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <url>
-    <Node
-        Key="testGet"
-        Expires="0"
-        Mock=""
-        Mockable="fasle"
-        ResponseClass="com.amuro.myapp.test.TestBean"
-        Url="http://192.168.202.64:8080/amuro/test/test1" />
 
-    <Node
-        Key="testPost"
-        Method="post"
-        Mock=""
-        Mockable="fasle"
-        ResponseClass="com.amuro.myapp.test.TestBean"
-        Url="http://192.168.202.64:8080/amuro/test/test1" />
-
+    <!--192.168.23.3-->
+    <!--192.168.1.115 ResponseClass="java.lang.String"-->
     <Node
         Key="login"
         Method="post"
         Mock=""
-        Mockable="fasle"
-        ResponseClass="com.amuro.myapp.login.dao.User"
-        Url="http://192.168.202.64:8080/amuro/test/login" />
+        Mockable="false"
+        ResponseClass="com.amuro.myapp.funcs.login.model.UserBean"
+        Url="http://192.168.13.6:8080/myserver/functions/login" />
 
     <Node
         Key="register"
         Method="post"
         Mock=""
-        Mockable="fasle"
-        ResponseClass="com.amuro.myapp.login.dao.User"
-        Url="http://192.168.202.64:8080/amuro/test/register" />
+        Mockable="false"
+
+        Url="http://192.168.13.6:8080/myserver/functions/register" />
 
 </url>

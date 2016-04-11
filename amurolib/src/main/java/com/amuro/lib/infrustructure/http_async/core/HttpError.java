@@ -38,4 +38,13 @@ public class HttpError
     {
         this.errorMessage = errorMessage;
     }
+
+    @Override
+    public String toString()
+    {
+        return "HttpError{" +
+                "errorCode=" + errorCode +
+                ", errorMessage='" + errorMessage + '\'' +
+                '}';
+    }
 }

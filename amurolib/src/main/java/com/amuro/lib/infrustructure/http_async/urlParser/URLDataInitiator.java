@@ -57,12 +57,15 @@ public class URLDataInitiator
 					if ("Node".equals(xmlParser.getName()))
 					{
 						URLData urlData = new URLData();
-						
+
+						//key
 						String key = xmlParser.getAttributeValue(null, "Key");
 						urlData.setKey(key);
-						
+
+						//baseUrl
 						urlData.setUrl(xmlParser.getAttributeValue(null, "Url"));
-						
+
+						//expires time
 						String expiresStr = xmlParser
 								.getAttributeValue(null, "Expires");
 						if(!TextUtils.isEmpty(expiresStr) && TextUtils.isDigitsOnly(expiresStr))
@@ -73,10 +76,19 @@ public class URLDataInitiator
 						{
 							urlData.setExpires(0);
 						}
-						
-						urlData.setResponseClass(xmlParser.getAttributeValue(
-								null, "ResponseClass"));
 
+						//response class
+						String responseClass = xmlParser.getAttributeValue(
+								null, "ResponseClass");
+
+						if(TextUtils.isEmpty(responseClass))
+						{
+							responseClass = "java.lang.Object";
+						}
+
+						urlData.setResponseClass(responseClass);
+
+						//Request Method
 						String method = xmlParser.getAttributeValue(null,
 								"Method");
 						if (!TextUtils.isEmpty(method))

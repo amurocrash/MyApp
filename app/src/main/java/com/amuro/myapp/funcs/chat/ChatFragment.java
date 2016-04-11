@@ -1,5 +1,6 @@
 package com.amuro.myapp.funcs.chat;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -45,7 +46,7 @@ public class ChatFragment extends BaseFragment
     }
 
     @Override
-    protected void initView()
+    protected void initView(Bundle savedInstanceState)
     {
 
     }

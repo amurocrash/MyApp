@@ -1,12 +1,10 @@
 package com.amuro.myapp.funcs.login.model;
 
-import com.amuro.lib.infrustructure.http.HttpHelper;
-import com.amuro.lib.infrustructure.http_async.response_parser.BaseEntity;
-import com.amuro.lib.infrustructure.http_async.response_parser.IResponseParser;
-import com.amuro.lib.infrustructure.http_async.response_parser.ResponseParserFactory;
-import com.amuro.lib.infrustructure.http_async.urlParser.URLData;
-import com.amuro.lib.infrustructure.http_async.urlParser.URLDataInitiator;
+import com.amuro.lib.infrustructure.http_async.core.HttpError;
+import com.amuro.lib.infrustructure.http_async.core.HttpHelper;
 import com.amuro.lib.mvp.model.AbsModel;
+import com.amuro.lib.mvp.model.Event;
+import com.amuro.lib.utils.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,45 +20,103 @@ public class UserModel extends AbsModel
     }
 
     private UserBean userBean;
-    private HttpHelper httpHelper;
+    private HttpHelper<UserBean> httpHelperLogin;
+    private HttpHelper httpHelperRegister;
 
     private UserModel()
     {
         userBean = new UserBean();
-        httpHelper = new HttpHelper();
+        httpHelperLogin = new HttpHelper();
+        httpHelperRegister = new HttpHelper();
     }
 
-    public boolean login(String username, String password)
+    public UserBean getUserBean()
     {
-        URLData urlData = URLDataInitiator.findURL("login");
+        return userBean;
+    }
 
-        if(urlData == null)
-        {
-            this.errorMsg = "url data not exist";
-            return false;
-        }
-
+    public void login(String username, String password)
+    {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("username", username);
         paramMap.put("password", password);
-        BaseEntity be = httpHelper.invoke(urlData, paramMap);
 
-        if(be.isSuccess())
+        httpHelperLogin.invoke("login", paramMap, new HttpHelper.OnResponseListener<UserBean>()
         {
-            IResponseParser<UserBean> ip =
-                    ResponseParserFactory.getResponseParser(urlData.getResponseType());
-            ip.parseResponse(be.getResult());
 
-            this.userBean = ip.parseResponse(be.getResult());
-            return true;
-        }
+            @Override
+            public void onSuccess(UserBean obj)
+            {
+                userBean = obj;
+                LogUtils.e(obj.toString());
+                notifyEvent(Event.EventType.LOGIN_SUCCEED, obj);
+            }
 
-        this.errorMsg = be.getErrorMessage();
-        return false;
+            @Override
+            public void onFailed(HttpError error)
+            {
+                LogUtils.e(error.toString());
+                notifyEvent(Event.EventType.LOGIN_FAILED, error);
+            }
+        });
     }
 
-    public void register()
+    public void register(
+            String username, String password, String nickname, String sex,
+            String age, String signature, String checkCode)
     {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("username", username);
+        paramMap.put("password", password);
+        paramMap.put("nickname", nickname);
+        paramMap.put("sex", sex);
+        paramMap.put("age", age);
+        paramMap.put("signature", signature);
+        paramMap.put("checkCode", checkCode);
 
+        httpHelperRegister.invoke("register", paramMap, new HttpHelper.OnResponseListener()
+        {
+            @Override
+            public void onSuccess(Object o)
+            {
+                notifyEvent(Event.EventType.REGISTER_SUCCESS);
+            }
+
+            @Override
+            public void onFailed(HttpError error)
+            {
+                notifyEvent(Event.EventType.REGISTER_FAILED, error);
+            }
+        });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

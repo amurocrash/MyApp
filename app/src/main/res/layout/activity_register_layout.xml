@@ -51,24 +51,6 @@
                 android:singleLine="true"/>
 
             <EditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"/>
-
-            <EditText
-                android:id="@+id/et_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="birthday"
-                android:digits="0123456789_"
-                android:maxLines="1"
-                android:singleLine="true"/>
-
-            <EditText
                 android:id="@+id/et_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,11 +59,37 @@
                 android:singleLine="true"/>
 
             <EditText
+                android:id="@+id/et_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="sex"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            <EditText
+                android:id="@+id/et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="age"
+                android:digits="0123456789"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            <EditText
+                android:id="@+id/et_signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="signature"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            <EditText
                 android:id="@+id/et_check_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="check code"
-                android:inputType="number"
+                android:digits="0123456789"
                 android:maxLines="1"
                 android:singleLine="true"/>
 

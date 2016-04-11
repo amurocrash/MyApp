@@ -1,9 +1,10 @@
 package com.amuro.lib.mvp.model;
 
-/**
- * Created by user on 2016/3/29.
- */
-public class AbsBean
-{
+import java.io.Serializable;
 
+/**
+ * Created by user on 2016/3/31.
+ */
+public abstract class AbsBean implements Serializable
+{
 }

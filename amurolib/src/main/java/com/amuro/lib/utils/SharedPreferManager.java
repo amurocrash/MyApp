@@ -38,4 +38,44 @@ public class SharedPreferManager
                 context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         return sp.getString(key, "");
     }
+
+    public void removeSpValue(String key)
+    {
+        SharedPreferences.Editor editor =
+                context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE).edit();
+        editor.remove(key);
+        editor.commit();
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
